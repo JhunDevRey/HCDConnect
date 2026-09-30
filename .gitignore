@@ -18,3 +18,9 @@ test-account.local.txt
 # Build outputs & Kotlin caches
 build/
 .kotlin/
+
+# Release signing (never commit these)
+*.jks
+*.keystore
+release-signing.local.txt
+hcdconnect-release.jks.base64.txt

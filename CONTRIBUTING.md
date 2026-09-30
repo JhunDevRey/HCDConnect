@@ -69,6 +69,37 @@ Before you open a pull request, check that the build and unit tests pass. The CI
 
 Keep each pull request to one change, which makes it quicker to review.
 
+## Releasing (maintainers)
+
+Releases are built and published by the **Release** workflow in `.github/workflows/release.yml`.
+
+1. In `CHANGELOG.md`, rename **[Unreleased]** to the new version and date, for example `## [1.1.0] - 2026-11-15`. Add a new, empty **[Unreleased]** section above it, and update the version links at the end of the file.
+2. Commit that change to `main`.
+3. Tag the commit and push the tag:
+   ```
+   git tag v1.1.0
+   git push origin v1.1.0
+   ```
+
+The workflow then does the following:
+
+- Runs the unit tests.
+- Builds a release APK signed with the release key. The version name comes from the tag, and the version code goes up by one with every release.
+- Publishes a GitHub release with the APK, a `SHA256SUMS.txt` checksum file, and that version's section of the changelog as the release notes.
+
+Tags with a suffix, such as `v1.2.0-beta.1`, are published as pre-releases.
+
+The signing key is stored in four repository secrets, under **Settings → Secrets and variables → Actions**:
+
+| Secret | Value |
+|---|---|
+| `HCD_KEYSTORE_BASE64` | The release keystore (`.jks` file), base64-encoded |
+| `HCD_KEYSTORE_PASSWORD` | The keystore password |
+| `HCD_KEY_ALIAS` | The key alias |
+| `HCD_KEY_PASSWORD` | The key password |
+
+Never commit the keystore or its passwords. Keep a backup of both somewhere safe. If they're lost, new releases can't be installed over the old app.
+
 ## Security and privacy
 
 - Don't commit passwords, API keys other than the ones in `google-services.json`, or real users' data. Keep test account details in `test-account.local.txt`, which git ignores.

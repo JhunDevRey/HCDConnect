@@ -18,6 +18,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - A security policy (`SECURITY.md`) that explains how to report vulnerabilities privately.
 - Issue forms for bug reports and feature requests, and a pull request template.
 - A GitHub Actions CI workflow that builds the app, runs the unit tests and lint on every push and pull request to `main`, and saves the debug APK.
+- A release workflow. Pushing a version tag such as `v1.1.0` builds a signed release APK and publishes it as a GitHub release, with notes taken from this changelog.
+- Release builds can take their signing key and version from environment variables. Local builds are unchanged.
 
 ### Changed
 

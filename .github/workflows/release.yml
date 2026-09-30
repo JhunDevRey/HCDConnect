@@ -1,0 +1,108 @@
+name: Release
+
+# Runs when you push a version tag, e.g.:
+#   git tag v1.1.0
+#   git push origin v1.1.0
+on:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: write # to create the GitHub release
+
+jobs:
+  release:
+    name: Build and publish release
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    env:
+      HCD_KEYSTORE_BASE64: ${{ secrets.HCD_KEYSTORE_BASE64 }}
+      HCD_KEYSTORE_PASSWORD: ${{ secrets.HCD_KEYSTORE_PASSWORD }}
+      HCD_KEY_ALIAS: ${{ secrets.HCD_KEY_ALIAS }}
+      HCD_KEY_PASSWORD: ${{ secrets.HCD_KEY_PASSWORD }}
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v7
+
+      - name: Work out the version
+        id: version
+        run: |
+          VERSION="${GITHUB_REF_NAME#v}"
+          if ! [[ "$VERSION" =~ ^[0-9]+(\.[0-9]+)*(-[0-9A-Za-z.-]+)?$ ]]; then
+            echo "::error::Tag '$GITHUB_REF_NAME' isn't a version tag like v1.2.0."
+            exit 1
+          fi
+          echo "name=$VERSION" >> "$GITHUB_OUTPUT"
+          # Pre-release tags such as v1.2.0-beta.1 are published as pre-releases.
+          if [[ "$VERSION" == *-* ]]; then echo "prerelease=true" >> "$GITHUB_OUTPUT"; else echo "prerelease=false" >> "$GITHUB_OUTPUT"; fi
+
+      - name: Check signing secrets
+        run: |
+          missing=""
+          for s in HCD_KEYSTORE_BASE64 HCD_KEYSTORE_PASSWORD HCD_KEY_ALIAS HCD_KEY_PASSWORD; do
+            [ -n "${!s}" ] || missing="$missing $s"
+          done
+          if [ -n "$missing" ]; then
+            echo "::error::Missing repository secrets:$missing. Add them under Settings > Secrets and variables > Actions."
+            exit 1
+          fi
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v6
+        with:
+          distribution: temurin
+          java-version: 21
+
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v6
+
+      - name: Restore signing keystore
+        run: |
+          echo "$HCD_KEYSTORE_BASE64" | base64 --decode > "$RUNNER_TEMP/release.jks"
+          echo "HCD_KEYSTORE_PATH=$RUNNER_TEMP/release.jks" >> "$GITHUB_ENV"
+
+      - name: Run unit tests
+        run: ./gradlew testDebugUnitTest
+
+      - name: Build signed release APK
+        env:
+          HCD_VERSION_NAME: ${{ steps.version.outputs.name }}
+          # Increases with every release run, so each release installs over the last.
+          HCD_VERSION_CODE: ${{ github.run_number }}
+        run: ./gradlew assembleRelease
+
+      - name: Rename APK
+        run: |
+          mkdir -p dist
+          cp app/build/outputs/apk/release/app-release.apk "dist/HCDConnect-${{ steps.version.outputs.name }}.apk"
+          (cd dist && sha256sum *.apk > SHA256SUMS.txt)
+
+      - name: Write release notes from CHANGELOG.md
+        run: |
+          # Takes the "## [<version>]" section of the changelog, if there is one.
+          awk -v v="${{ steps.version.outputs.name }}" '
+            index($0, "## [" v "]") == 1 { found = 1; next }
+            found && index($0, "## [") == 1 { exit }
+            # Stop at the link list at the end of the file, too.
+            found && index($0, "[") == 1 && index($0, "]: http") > 0 { exit }
+            found { print }
+          ' CHANGELOG.md > release-notes.md
+          if [ ! -s release-notes.md ] || ! grep -q '[^[:space:]]' release-notes.md; then
+            echo "::warning::CHANGELOG.md has no section for ${{ steps.version.outputs.name }}, so GitHub will write the notes from the commits."
+            rm release-notes.md
+          fi
+
+      - name: Publish GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          args=(--title "HCDConnect ${{ steps.version.outputs.name }}" --verify-tag)
+          if [ -f release-notes.md ]; then args+=(--notes-file release-notes.md); else args+=(--generate-notes); fi
+          if [ "${{ steps.version.outputs.prerelease }}" = "true" ]; then args+=(--prerelease); fi
+          gh release create "$GITHUB_REF_NAME" dist/* "${args[@]}"
+
+      - name: Remove signing keystore
+        if: always()
+        run: rm -f "$RUNNER_TEMP/release.jks"

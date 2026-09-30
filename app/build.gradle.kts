@@ -3,6 +3,10 @@ plugins {
     alias(libs.plugins.google.services)
 }
 
+// The release workflow sets these from GitHub secrets and the release tag.
+// Local builds don't need them: they use the defaults below and an unsigned release build.
+val releaseKeystorePath: String? = System.getenv("HCD_KEYSTORE_PATH")
+
 android {
     namespace = "com.hcdc.hcdconnect"
     compileSdk {
@@ -15,14 +19,26 @@ android {
         applicationId = "com.hcdc.hcdconnect"
         minSdk = 26
         targetSdk = 36
-        versionCode = 1
-        versionName = "1.0"
+        versionCode = System.getenv("HCD_VERSION_CODE")?.toInt() ?: 1
+        versionName = System.getenv("HCD_VERSION_NAME") ?: "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    signingConfigs {
+        if (releaseKeystorePath != null) {
+            create("release") {
+                storeFile = file(releaseKeystorePath)
+                storePassword = System.getenv("HCD_KEYSTORE_PASSWORD")
+                keyAlias = System.getenv("HCD_KEY_ALIAS")
+                keyPassword = System.getenv("HCD_KEY_PASSWORD")
+            }
+        }
+    }
+
     buildTypes {
         release {
+            signingConfig = signingConfigs.findByName("release")
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
