@@ -64,6 +64,26 @@ firestore.rules         # Firestore security rules (mirrors the published rules)
    - Create a Cloud Firestore database and publish the rules in `firestore.rules`.
 4. Build and run on an emulator or device (Android 8.0 or later).
 
+## Resetting a forgotten password
+
+Password resets use Firebase Authentication's reset email, so the app doesn't need a screen for choosing a new password.
+
+1. On the sign-in screen, enter your email address. You don't need to enter a password.
+2. Tap **Forgot password?**.
+3. The app shows "Password reset email sent. Check your inbox."
+4. Open the email from Firebase and follow the link to set a new password. If it isn't in your inbox, check spam.
+5. Go back to the app and sign in with your new password.
+
+If the email is blank or badly formatted, the email field shows an error and nothing is sent. If the request fails, the app shows a message, for example when there's no internet connection or after too many attempts.
+
+Notes:
+
+- Firebase doesn't say whether an account exists for the email, so people can't use this to find out who has an account. If no account uses that email, no email arrives.
+- The `@hcdc.test` test accounts don't have real inboxes, so they never get reset emails. Use an account with a real email address to test this.
+- To change the email's wording, sender name or reset page, go to **Authentication → Templates → Password reset** in the Firebase console.
+
+The code is in `LoginActivity` (button), `LoginViewModel.sendPasswordReset()` (email checks and messages) and `AuthRepository.sendPasswordReset()` (calls `FirebaseAuth.sendPasswordResetEmail`).
+
 ## Firestore data model
 
 | Collection | Document ID | Contents |
