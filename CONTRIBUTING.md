@@ -2,6 +2,8 @@
 
 Thanks for helping improve HCDConnect. This guide covers how to set up the project, the conventions the code follows, and how to send a change.
 
+Everyone taking part in this project is expected to follow the [Code of Conduct](CODE_OF_CONDUCT.md).
+
 ## Ways to help
 
 - **Report a bug:** open an issue with the steps to reproduce it, what you expected, what happened, and your Android version and device. A screenshot or screen recording helps.
