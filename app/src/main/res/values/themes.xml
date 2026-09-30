@@ -1,0 +1,163 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme: Holy Cross of Davao College colors (hcdc.edu.ph) and the Lato typeface. -->
+    <style name="Base.Theme.HCDConnect" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Maroon for buttons, tabs, switches, progress and links. -->
+        <item name="colorPrimary">@color/hcdc_maroon</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorPrimaryContainer">#FFDAD4</item>
+        <item name="colorOnPrimaryContainer">@color/hcdc_maroon_deep</item>
+        <item name="colorPrimaryInverse">#FFB4A8</item>
+
+        <!-- Gold for selected chips and other highlights. -->
+        <item name="colorSecondary">#7A5A12</item>
+        <item name="colorOnSecondary">@color/white</item>
+        <item name="colorSecondaryContainer">@color/hcdc_gold_soft</item>
+        <item name="colorOnSecondaryContainer">@color/hcdc_maroon_deep</item>
+
+        <!-- Navy from the cross in the logo. -->
+        <item name="colorTertiary">@color/hcdc_navy</item>
+        <item name="colorOnTertiary">@color/white</item>
+        <!-- Used for the time picker's AM/PM selection, so it's HCDC gold. -->
+        <item name="colorTertiaryContainer">@color/hcdc_gold_soft</item>
+        <item name="colorOnTertiaryContainer">@color/hcdc_maroon_deep</item>
+
+        <item name="colorError">@color/hcdc_red</item>
+        <item name="colorOnError">@color/white</item>
+
+        <!-- Cream page background with white cards, like the site's sections. -->
+        <item name="android:colorBackground">@color/hcdc_cream</item>
+        <item name="colorOnBackground">@color/hcdc_ink</item>
+        <item name="colorSurface">@color/hcdc_cream</item>
+        <item name="colorOnSurface">@color/hcdc_ink</item>
+        <item name="colorSurfaceVariant">#F2E7DC</item>
+        <item name="colorOnSurfaceVariant">@color/hcdc_body_text</item>
+        <item name="colorSurfaceContainerLowest">@color/white</item>
+        <item name="colorSurfaceContainerLow">@color/white</item>
+        <item name="colorSurfaceContainer">#F6EFE4</item>
+        <item name="colorSurfaceContainerHigh">#F3EBDF</item>
+        <item name="colorSurfaceContainerHighest">#EDE3D6</item>
+        <item name="colorOutline">#857370</item>
+        <item name="colorOutlineVariant">#D8C2BD</item>
+
+        <!-- Lato everywhere: default text plus every Material 3 type style. -->
+        <!-- Lato comes from the text appearances below. A theme-wide android:fontFamily would
+             override their weights, so every Material 3 type style is set instead. -->
+        <item name="textAppearanceDisplayLarge">@style/TextAppearance.HCDConnect.DisplayLarge</item>
+        <item name="textAppearanceDisplayMedium">@style/TextAppearance.HCDConnect.DisplayMedium</item>
+        <item name="textAppearanceDisplaySmall">@style/TextAppearance.HCDConnect.DisplaySmall</item>
+        <item name="textAppearanceHeadlineLarge">@style/TextAppearance.HCDConnect.HeadlineLarge</item>
+        <item name="textAppearanceHeadlineMedium">@style/TextAppearance.HCDConnect.HeadlineMedium</item>
+        <item name="textAppearanceHeadlineSmall">@style/TextAppearance.HCDConnect.HeadlineSmall</item>
+        <item name="textAppearanceTitleLarge">@style/TextAppearance.HCDConnect.TitleLarge</item>
+        <item name="textAppearanceTitleMedium">@style/TextAppearance.HCDConnect.TitleMedium</item>
+        <item name="textAppearanceTitleSmall">@style/TextAppearance.HCDConnect.TitleSmall</item>
+        <item name="textAppearanceBodyLarge">@style/TextAppearance.HCDConnect.BodyLarge</item>
+        <item name="textAppearanceBodyMedium">@style/TextAppearance.HCDConnect.BodyMedium</item>
+        <item name="textAppearanceBodySmall">@style/TextAppearance.HCDConnect.BodySmall</item>
+        <item name="textAppearanceLabelLarge">@style/TextAppearance.HCDConnect.LabelLarge</item>
+        <item name="textAppearanceLabelMedium">@style/TextAppearance.HCDConnect.LabelMedium</item>
+        <item name="textAppearanceLabelSmall">@style/TextAppearance.HCDConnect.LabelSmall</item>
+
+        <!-- Maroon header bar like the site's navigation, in light and dark mode. -->
+        <item name="materialButtonStyle">@style/Widget.HCDConnect.Button</item>
+        <item name="toolbarStyle">@style/Widget.HCDConnect.Toolbar</item>
+    </style>
+
+    <style name="Theme.HCDConnect" parent="Base.Theme.HCDConnect" />
+
+    <!-- Filled buttons: HCDC maroon with white text in light and dark mode. -->
+    <style name="Widget.HCDConnect.Button" parent="Widget.Material3.Button">
+        <item name="backgroundTint">@color/hcdc_button_background</item>
+        <item name="android:textColor">@color/hcdc_button_text</item>
+        <item name="iconTint">@color/hcdc_button_text</item>
+    </style>
+
+    <!-- Toolbars: maroon background with white title, subtitle, icons and menu actions. -->
+    <style name="Widget.HCDConnect.Toolbar" parent="Widget.Material3.Toolbar">
+        <item name="android:background">@color/hcdc_maroon</item>
+        <item name="titleTextColor">@color/white</item>
+        <item name="subtitleTextColor">#F2E3E0</item>
+        <item name="titleTextAppearance">@style/TextAppearance.HCDConnect.ToolbarTitle</item>
+        <item name="navigationIconTint">@color/white</item>
+        <!-- Menus opened from the maroon bar use the normal app colors. -->
+        <item name="popupTheme">@style/Theme.HCDConnect</item>
+    </style>
+
+    <!-- Makes the overflow icon and text menu actions white on the maroon bar. Applied with
+         android:theme on each toolbar, since a theme set inside a default style is ignored. -->
+    <style name="ThemeOverlay.HCDConnect.Toolbar" parent="ThemeOverlay.Material3.Dark.ActionBar">
+        <item name="colorControlNormal">@color/white</item>
+        <item name="colorOnSurface">@color/white</item>
+        <item name="colorOnSurfaceVariant">@color/white</item>
+        <item name="actionMenuTextColor">@color/white</item>
+        <item name="actionMenuTextAppearance">@style/TextAppearance.HCDConnect.LabelLarge</item>
+    </style>
+
+    <!-- Material 3 type scale in Lato. Sizes and spacing come from the Material 3 parents. -->
+    <style name="TextAppearance.HCDConnect.DisplayLarge" parent="TextAppearance.Material3.DisplayLarge">
+        <item name="fontFamily">@font/lato_regular</item>
+        <item name="android:fontFamily">@font/lato_regular</item>
+    </style>
+    <style name="TextAppearance.HCDConnect.DisplayMedium" parent="TextAppearance.Material3.DisplayMedium">
+        <item name="fontFamily">@font/lato_regular</item>
+        <item name="android:fontFamily">@font/lato_regular</item>
+    </style>
+    <style name="TextAppearance.HCDConnect.DisplaySmall" parent="TextAppearance.Material3.DisplaySmall">
+        <item name="fontFamily">@font/lato_regular</item>
+        <item name="android:fontFamily">@font/lato_regular</item>
+    </style>
+    <!-- Headlines use Lato Black like the site's hero headings; titles and labels use Lato Bold.
+         The weight files are referenced directly because textFontWeight needs API 28. -->
+    <style name="TextAppearance.HCDConnect.HeadlineLarge" parent="TextAppearance.Material3.HeadlineLarge">
+        <item name="fontFamily">@font/lato_black</item>
+        <item name="android:fontFamily">@font/lato_black</item>
+    </style>
+    <style name="TextAppearance.HCDConnect.HeadlineMedium" parent="TextAppearance.Material3.HeadlineMedium">
+        <item name="fontFamily">@font/lato_black</item>
+        <item name="android:fontFamily">@font/lato_black</item>
+    </style>
+    <style name="TextAppearance.HCDConnect.HeadlineSmall" parent="TextAppearance.Material3.HeadlineSmall">
+        <item name="fontFamily">@font/lato_black</item>
+        <item name="android:fontFamily">@font/lato_black</item>
+    </style>
+    <style name="TextAppearance.HCDConnect.TitleLarge" parent="TextAppearance.Material3.TitleLarge">
+        <item name="fontFamily">@font/lato_bold</item>
+        <item name="android:fontFamily">@font/lato_bold</item>
+    </style>
+    <style name="TextAppearance.HCDConnect.TitleMedium" parent="TextAppearance.Material3.TitleMedium">
+        <item name="fontFamily">@font/lato_bold</item>
+        <item name="android:fontFamily">@font/lato_bold</item>
+    </style>
+    <style name="TextAppearance.HCDConnect.TitleSmall" parent="TextAppearance.Material3.TitleSmall">
+        <item name="fontFamily">@font/lato_bold</item>
+        <item name="android:fontFamily">@font/lato_bold</item>
+    </style>
+    <style name="TextAppearance.HCDConnect.BodyLarge" parent="TextAppearance.Material3.BodyLarge">
+        <item name="fontFamily">@font/lato_regular</item>
+        <item name="android:fontFamily">@font/lato_regular</item>
+    </style>
+    <style name="TextAppearance.HCDConnect.BodyMedium" parent="TextAppearance.Material3.BodyMedium">
+        <item name="fontFamily">@font/lato_regular</item>
+        <item name="android:fontFamily">@font/lato_regular</item>
+    </style>
+    <style name="TextAppearance.HCDConnect.BodySmall" parent="TextAppearance.Material3.BodySmall">
+        <item name="fontFamily">@font/lato_regular</item>
+        <item name="android:fontFamily">@font/lato_regular</item>
+    </style>
+    <style name="TextAppearance.HCDConnect.LabelLarge" parent="TextAppearance.Material3.LabelLarge">
+        <item name="fontFamily">@font/lato_bold</item>
+        <item name="android:fontFamily">@font/lato_bold</item>
+    </style>
+    <style name="TextAppearance.HCDConnect.LabelMedium" parent="TextAppearance.Material3.LabelMedium">
+        <item name="fontFamily">@font/lato_bold</item>
+        <item name="android:fontFamily">@font/lato_bold</item>
+    </style>
+    <style name="TextAppearance.HCDConnect.LabelSmall" parent="TextAppearance.Material3.LabelSmall">
+        <item name="fontFamily">@font/lato_bold</item>
+        <item name="android:fontFamily">@font/lato_bold</item>
+    </style>
+    <style name="TextAppearance.HCDConnect.ToolbarTitle" parent="TextAppearance.Material3.TitleLarge">
+        <item name="fontFamily">@font/lato_black</item>
+        <item name="android:fontFamily">@font/lato_black</item>
+    </style>
+</resources>

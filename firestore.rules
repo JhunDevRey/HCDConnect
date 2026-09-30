@@ -1,0 +1,141 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ---- Roles ----
+    // Admin: listed in /admins. Allowed everything.
+    // Organizer: listed in /organizers with at most one club in `clubs`. Can post and
+    //   manage events for that club only, and can pick the club themselves, once.
+    // Everyone else signed in: can view events and RSVP.
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isAdmin() {
+      return isSignedIn()
+          && exists(/databases/$(database)/documents/admins/$(request.auth.uid));
+    }
+
+    function isOrganizer() {
+      return isSignedIn()
+          && exists(/databases/$(database)/documents/organizers/$(request.auth.uid));
+    }
+
+    function organizesClub(club) {
+      return isOrganizer()
+          && club in get(/databases/$(database)/documents/organizers/$(request.auth.uid))
+                         .data.get('clubs', []);
+    }
+
+    // Clubs are listed in /clubs, one document per club, with the club name as its ID.
+    function clubExists(club) {
+      return club is string
+          && club.size() > 0
+          && exists(/databases/$(database)/documents/clubs/$(club));
+    }
+
+    // ---- Events ----
+
+    // The creator editing their event, while they still organize its club. They can't move
+    // it to a club they don't organize, hand it to someone else, or change the RSVP list.
+    function isCreatorEdit() {
+      return resource.data.get('createdBy', '') == request.auth.uid
+          && organizesClub(resource.data.organizerClub)
+          && organizesClub(request.resource.data.organizerClub)
+          && request.resource.data.get('createdBy', '') == request.auth.uid
+          && !('attendees' in request.resource.data.diff(resource.data).affectedKeys());
+    }
+
+    // Any signed-in user adding or removing themselves (and only themselves) from the
+    // attendees list, without touching any other field.
+    function isOwnRsvpChange() {
+      let before = resource.data.get('attendees', []).toSet();
+      let after = request.resource.data.get('attendees', []).toSet();
+      return isSignedIn()
+          && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['attendees'])
+          && before.difference(after).union(after.difference(before)).hasOnly([request.auth.uid]);
+    }
+
+    match /events/{eventId} {
+      allow read: if isSignedIn();
+
+      // Admins post for any listed club; organizers only for their own. Always in your
+      // own name and with no RSVPs yet.
+      allow create: if request.resource.data.get('createdBy', '') == request.auth.uid
+                    && request.resource.data.get('attendees', []).size() == 0
+                    && clubExists(request.resource.data.get('organizerClub', ''))
+                    && (isAdmin() || organizesClub(request.resource.data.organizerClub));
+
+      allow update: if isAdmin() || isCreatorEdit() || isOwnRsvpChange();
+
+      allow delete: if isAdmin()
+                    || (resource.data.get('createdBy', '') == request.auth.uid
+                        && organizesClub(resource.data.organizerClub));
+    }
+
+    // ---- Clubs ----
+
+    match /clubs/{clubName} {
+      allow read: if isSignedIn();
+      // Only admins manage the club list. The document ID must be the club's name.
+      allow create, update: if isAdmin()
+                            && request.resource.data.keys().hasOnly(['name'])
+                            && request.resource.data.name == clubName;
+      allow delete: if isAdmin();
+    }
+
+    // ---- Organizers ----
+
+    // {email, clubs: [] or [one listed club]}
+    function isValidOrganizer() {
+      return request.resource.data.keys().hasOnly(['email', 'clubs'])
+          && request.resource.data.clubs is list
+          && request.resource.data.clubs.size() <= 1
+          && (request.resource.data.clubs.size() == 0
+              || clubExists(request.resource.data.clubs[0]));
+    }
+
+    match /organizers/{userId} {
+      // Users can check their own organizer status; admins can see everyone's.
+      allow read: if isSignedIn() && (request.auth.uid == userId || isAdmin());
+
+      // Admins make people organizers and can set or change their club.
+      allow create, update: if isAdmin() && isValidOrganizer();
+
+      // An organizer with no club yet can join exactly one listed club, once.
+      // After that, only an admin can change it.
+      allow update: if isSignedIn()
+                    && request.auth.uid == userId
+                    && resource.data.get('clubs', []).size() == 0
+                    && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['clubs'])
+                    && request.resource.data.clubs.size() == 1
+                    && clubExists(request.resource.data.clubs[0]);
+
+      allow delete: if isAdmin();
+    }
+
+    // ---- Users and admins ----
+
+    match /users/{userId} {
+      // Profiles let admins find people to give roles to.
+      allow read: if isSignedIn() && (request.auth.uid == userId || isAdmin());
+      // Each user writes only their own profile, with the email from their sign-in.
+      allow create, update: if isSignedIn()
+                            && request.auth.uid == userId
+                            && request.resource.data.keys().hasOnly(['email', 'lastSignIn'])
+                            && request.resource.data.email == request.auth.token.email
+                            && request.resource.data.lastSignIn == request.time;
+      allow delete: if false;
+    }
+
+    match /admins/{userId} {
+      allow read: if isSignedIn() && (request.auth.uid == userId || isAdmin());
+      // Admins can make other admins.
+      allow create, update: if isAdmin() && request.resource.data.keys().hasOnly(['email']);
+      // Admins can't remove themselves, so there's always at least one admin.
+      allow delete: if isAdmin() && userId != request.auth.uid;
+    }
+  }
+}

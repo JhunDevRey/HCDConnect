@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "836341600978",
+    "project_id": "hcdconnect-bf318",
+    "storage_bucket": "hcdconnect-bf318.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:836341600978:android:c043b12705542437ac530b",
+        "android_client_info": {
+          "package_name": "com.hcdc.hcdconnect"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAsk5opfHw5jeSKEpe5HVKedfNxQkfkFOk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

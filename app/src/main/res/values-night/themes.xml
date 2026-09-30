@@ -1,0 +1,59 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Dark mode: HCDC gold for accents (tabs, labels, links, switches), since maroon text
+         isn't readable on dark backgrounds. Buttons and the header bar stay maroon. -->
+    <style name="Base.Theme.HCDConnect" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/hcdc_gold_soft</item>
+        <item name="colorOnPrimary">@color/hcdc_maroon_deep</item>
+        <item name="colorPrimaryContainer">@color/hcdc_maroon</item>
+        <item name="colorOnPrimaryContainer">#FFDAD4</item>
+        <item name="colorPrimaryInverse">@color/hcdc_maroon</item>
+
+        <item name="colorSecondary">@color/hcdc_gold_soft</item>
+        <item name="colorOnSecondary">#3F2E00</item>
+        <item name="colorSecondaryContainer">#5B4300</item>
+        <item name="colorOnSecondaryContainer">@color/hcdc_gold_soft</item>
+
+        <item name="colorTertiary">#A7C8FF</item>
+        <item name="colorOnTertiary">#003060</item>
+        <item name="colorTertiaryContainer">@color/hcdc_navy</item>
+        <item name="colorOnTertiaryContainer">#D5E3FF</item>
+
+        <item name="colorError">#FFB3B5</item>
+        <item name="colorOnError">#680018</item>
+
+        <item name="android:colorBackground">@color/hcdc_ink</item>
+        <item name="colorOnBackground">#F1DFDB</item>
+        <item name="colorSurface">@color/hcdc_ink</item>
+        <item name="colorOnSurface">#F1DFDB</item>
+        <item name="colorSurfaceVariant">#534340</item>
+        <item name="colorOnSurfaceVariant">#D8C2BD</item>
+        <item name="colorSurfaceContainerLowest">#140C0A</item>
+        <item name="colorSurfaceContainerLow">#241A18</item>
+        <item name="colorSurfaceContainer">#291E1C</item>
+        <item name="colorSurfaceContainerHigh">#342826</item>
+        <item name="colorSurfaceContainerHighest">#3F3331</item>
+        <item name="colorOutline">#A08C88</item>
+        <item name="colorOutlineVariant">#534340</item>
+
+        <!-- Lato comes from the text appearances below. A theme-wide android:fontFamily would
+             override their weights, so every Material 3 type style is set instead. -->
+        <item name="textAppearanceDisplayLarge">@style/TextAppearance.HCDConnect.DisplayLarge</item>
+        <item name="textAppearanceDisplayMedium">@style/TextAppearance.HCDConnect.DisplayMedium</item>
+        <item name="textAppearanceDisplaySmall">@style/TextAppearance.HCDConnect.DisplaySmall</item>
+        <item name="textAppearanceHeadlineLarge">@style/TextAppearance.HCDConnect.HeadlineLarge</item>
+        <item name="textAppearanceHeadlineMedium">@style/TextAppearance.HCDConnect.HeadlineMedium</item>
+        <item name="textAppearanceHeadlineSmall">@style/TextAppearance.HCDConnect.HeadlineSmall</item>
+        <item name="textAppearanceTitleLarge">@style/TextAppearance.HCDConnect.TitleLarge</item>
+        <item name="textAppearanceTitleMedium">@style/TextAppearance.HCDConnect.TitleMedium</item>
+        <item name="textAppearanceTitleSmall">@style/TextAppearance.HCDConnect.TitleSmall</item>
+        <item name="textAppearanceBodyLarge">@style/TextAppearance.HCDConnect.BodyLarge</item>
+        <item name="textAppearanceBodyMedium">@style/TextAppearance.HCDConnect.BodyMedium</item>
+        <item name="textAppearanceBodySmall">@style/TextAppearance.HCDConnect.BodySmall</item>
+        <item name="textAppearanceLabelLarge">@style/TextAppearance.HCDConnect.LabelLarge</item>
+        <item name="textAppearanceLabelMedium">@style/TextAppearance.HCDConnect.LabelMedium</item>
+        <item name="textAppearanceLabelSmall">@style/TextAppearance.HCDConnect.LabelSmall</item>
+
+        <item name="materialButtonStyle">@style/Widget.HCDConnect.Button</item>
+        <item name="toolbarStyle">@style/Widget.HCDConnect.Toolbar</item>
+    </style>
+</resources>

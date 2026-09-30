@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Holy Cross of Davao College brand palette, from the hcdc CSS variables on
+         hcdc.edu.ph and the college logo. -->
+    <color name="hcdc_maroon">#700202</color>
+    <color name="hcdc_maroon_deep">#4A0101</color>
+    <color name="hcdc_gold_soft">#E9D3A3</color>
+    <color name="hcdc_cream">#FAF6EE</color>
+    <color name="hcdc_ink">#1B1210</color>
+    <color name="hcdc_body_text">#3C3A47</color>
+    <color name="hcdc_red">#CE1C3A</color>
+    <!-- The cross in the logo. -->
+    <color name="hcdc_navy">#05366A</color>
+
+    <color name="white">#FFFFFF</color>
+</resources>

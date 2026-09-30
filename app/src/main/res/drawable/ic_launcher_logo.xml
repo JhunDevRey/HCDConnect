@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Launcher icon foreground: the college logo, inset into the adaptive icon's safe zone
+     (the central 66 of 108dp) so circular and rounded masks never clip it. -->
+<inset xmlns:android="http://schemas.android.com/apk/res/android"
+    android:drawable="@drawable/hcdc_logo"
+    android:inset="22%" />
