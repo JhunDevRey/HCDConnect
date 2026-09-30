@@ -20,6 +20,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - A GitHub Actions CI workflow that builds the app, runs the unit tests and lint on every push and pull request to `main`, and saves the debug APK.
 - A release workflow. Pushing a version tag such as `v1.1.0` builds a signed release APK and publishes it as a GitHub release, with notes taken from this changelog.
 - Release builds can take their signing key and version from environment variables. Local builds are unchanged.
+- An `.editorconfig` with shared editor settings: UTF-8, LF line endings, 4-space indents (2 for YAML, JSON and Markdown), and a final newline.
 - Dependabot, which checks weekly for Gradle library and GitHub Actions updates and opens grouped pull requests for them.
 
 ### Changed

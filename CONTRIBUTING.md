@@ -54,6 +54,7 @@ Before you open a pull request, check that the build and unit tests pass. The CI
 ## Code style
 
 - Kotlin, following the [Kotlin coding conventions](https://kotlinlang.org/docs/coding-conventions.html) and Android Studio's default formatter.
+- `.editorconfig` sets the basics: 4-space indents (2 for YAML, JSON and Markdown), LF line endings, and lines up to 120 characters in Kotlin. Android Studio applies it automatically. For other editors, you may need an EditorConfig plugin.
 - Match the code around you: its naming, comment style and structure.
 - Put all user-facing text in `res/values/strings.xml`. Don't hard-code it in Kotlin or layouts.
 - Use the theme's colors and text appearances, not hard-coded values, so light and dark mode both work. Check your change in both.
