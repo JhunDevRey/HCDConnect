@@ -42,7 +42,7 @@ Admins can set roles in the app under **⋮ → Manage users & clubs**.
 
 On Windows, use `gradlew.bat` in place of `./gradlew`.
 
-Before you open a pull request, check that the build and unit tests pass. Also try your change in the app with each role it affects. Add unit tests for new logic in `app/src/test`. `CampusEventTest` is an example.
+Before you open a pull request, check that the build and unit tests pass. The CI workflow runs the same build, unit tests and lint on every pull request, and a pull request needs a green check before it's merged. Also try your change in the app with each role it affects. Add unit tests for new logic in `app/src/test`. `CampusEventTest` is an example.
 
 ## How the code is organized
 
