@@ -1,0 +1,29 @@
+# Line endings: store text files with LF in the repo, and check them out with LF
+# on every OS. This matches .editorconfig and overrides each person's core.autocrlf.
+* text=auto eol=lf
+
+# Windows batch files need CRLF to run.
+*.bat text eol=crlf
+*.cmd text eol=crlf
+
+# The Gradle wrapper script must keep LF to run on macOS, Linux and CI.
+gradlew text eol=lf
+
+# Binary files: never change line endings or try to diff or merge them as text.
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.webp binary
+*.gif binary
+*.ico binary
+*.ttf binary
+*.otf binary
+*.jar binary
+*.apk binary
+*.aab binary
+*.jks binary
+*.keystore binary
+
+# Show Kotlin and Gradle diffs with function and class names in hunk headers.
+*.kt diff=kotlin
+*.kts diff=kotlin
