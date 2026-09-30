@@ -12,6 +12,14 @@ Students can browse events and RSVP. They don't see the **New event** button, th
 |:---:|:---:|:---:|
 | <img src="docs/screenshots/student-dashboard.png" width="240" alt="Student dashboard without the New event button"> | <img src="docs/screenshots/student-menu.png" width="240" alt="Student menu showing only Sign out"> | <img src="docs/screenshots/student-event-details.png" width="240" alt="Event details for a student, with RSVP but no edit menu"> |
 
+### Organizer view
+
+Organizers get the **New event** button and can post only for their own club. The club is filled in on the form. They can edit and delete the events they created. They don't see **Manage users & clubs**.
+
+| Events dashboard | Menu (sign out only) | New event (own club only) |
+|:---:|:---:|:---:|
+| <img src="docs/screenshots/organizer-dashboard.png" width="240" alt="Organizer dashboard with the New event button"> | <img src="docs/screenshots/organizer-menu.png" width="240" alt="Organizer menu showing only Sign out"> | <img src="docs/screenshots/organizer-new-event.png" width="240" alt="New event form with the organizer's club filled in"> |
+
 ### Admin view
 
 | Sign in | Events dashboard | Event details |
