@@ -73,7 +73,7 @@ Keep each pull request to one change, which makes it quicker to review.
 
 - Don't commit passwords, API keys other than the ones in `google-services.json`, or real users' data. Keep test account details in `test-account.local.txt`, which git ignores.
 - Screenshots in issues and pull requests shouldn't show real people's emails. Use test accounts.
-- If you find a security problem, such as a way around the Firestore rules, don't open a public issue. Contact the maintainer, [@JhunDevRey](https://github.com/JhunDevRey), privately instead.
+- If you find a security problem, such as a way around the Firestore rules, don't open a public issue. Follow [SECURITY.md](SECURITY.md) to report it privately.
 
 ## License
 
