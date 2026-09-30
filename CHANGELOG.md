@@ -13,6 +13,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - README with features, setup, the Firestore data model, the password reset steps, and screenshots of the student, organizer and admin views.
 - MIT license.
 - This changelog.
+- A contributing guide (`CONTRIBUTING.md`).
 
 ### Changed
 

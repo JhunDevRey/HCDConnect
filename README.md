@@ -114,6 +114,10 @@ The code is in `LoginActivity` (button), `LoginViewModel.sendPasswordReset()` (e
 
 To make the first admin, create a document in `admins` with that user's UID as the document ID. After that, admins can manage roles in the app's **Manage users & clubs** screen.
 
+## Contributing
+
+Contributions are welcome. See [CONTRIBUTING.md](CONTRIBUTING.md) for setup, conventions and how to send a pull request.
+
 ## License
 
 HCDConnect is released under the [MIT License](LICENSE).
