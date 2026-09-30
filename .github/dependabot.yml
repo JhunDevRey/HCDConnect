@@ -1,0 +1,49 @@
+# Keeps the app's libraries and the GitHub Actions used by the workflows up to date.
+# Dependabot opens pull requests with the updates; CI checks each one.
+version: 2
+
+updates:
+  # Gradle dependencies and plugins, including gradle/libs.versions.toml.
+  - package-ecosystem: gradle
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+      time: "09:00"
+      timezone: Asia/Manila
+    open-pull-requests-limit: 5
+    groups:
+      # Test libraries. Listed first so AndroidX test libraries land here, not in "android".
+      testing:
+        patterns:
+          - "junit*"
+          - "androidx.test*"
+      # Firebase libraries are released together, so update them in one pull request.
+      firebase:
+        patterns:
+          - "com.google.firebase*"
+          - "com.google.gms*"
+      # Android Gradle plugin, AndroidX and Material Components.
+      android:
+        patterns:
+          - "com.android*"
+          - "androidx*"
+          - "com.google.android.material*"
+      # Kotlin and coroutines.
+      kotlin:
+        patterns:
+          - "org.jetbrains.kotlin*"
+          - "org.jetbrains.kotlinx*"
+
+  # Actions used in .github/workflows.
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+      time: "09:00"
+      timezone: Asia/Manila
+    groups:
+      github-actions:
+        patterns:
+          - "*"
