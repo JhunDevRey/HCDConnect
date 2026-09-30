@@ -1,6 +1,6 @@
 # HCDConnect
 
-[![CI](https://github.com/JhunDevRey/HCDConnect/actions/workflows/ci.yml/badge.svg)](https://github.com/JhunDevRey/HCDConnect/actions/workflows/ci.yml)
+[![CI](https://github.com/JhunDevRey/HCDConnect/actions/workflows/ci.yml/badge.svg)](https://github.com/JhunDevRey/HCDConnect/actions/workflows/ci.yml) [![License: MIT](https://img.shields.io/github/license/JhunDevRey/HCDConnect)](LICENSE)
 
 HCDConnect is an Android app for campus events at Holy Cross of Davao College (HCDC). Students can browse and RSVP to events. Club organizers post and manage events for their club, and admins manage clubs and users.
 
