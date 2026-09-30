@@ -9,6 +9,13 @@
         app:actionViewClass="androidx.appcompat.widget.SearchView"
         app:showAsAction="ifRoom|collapseActionView" />
 
+    <!-- "Signed in as <email>". Not tappable; the email lives here so the toolbar only needs the role. -->
+    <item
+        android:id="@+id/action_account"
+        android:enabled="false"
+        android:title=""
+        app:showAsAction="never" />
+
     <!-- Shown only to admins. -->
     <item
         android:id="@+id/action_manage_organizers"

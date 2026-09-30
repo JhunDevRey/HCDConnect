@@ -73,6 +73,8 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         setUpBrandedSystemBars(binding.root, binding.toolbar)
+        binding.toolbar.menu.findItem(R.id.action_account).title =
+            getString(R.string.signed_in_as, user.email.orEmpty())
 
         binding.toolbar.setOnMenuItemClickListener { item ->
             when (item.itemId) {
@@ -181,9 +183,9 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
-    private fun subtitleFor(roles: UserRoles): String {
-        val email = authRepository.currentUser?.email.orEmpty()
-        val role = when {
+    /** The role only; the email is in the menu, so the toolbar never cuts the role off. */
+    private fun subtitleFor(roles: UserRoles): String? =
+        when {
             roles.isAdmin -> getString(R.string.role_admin)
             roles.isOrganizer && roles.organizerClub != null ->
                 getString(R.string.role_organizer_of, roles.organizerClub)
@@ -191,8 +193,6 @@ class MainActivity : AppCompatActivity() {
             roles.isStudent -> getString(R.string.role_student)
             else -> null
         }
-        return if (role == null) email else getString(R.string.subtitle_with_role, email, role)
-    }
 
     private fun renderActions(state: DashboardActionState) {
         state.joinableClubs?.let { clubs ->
