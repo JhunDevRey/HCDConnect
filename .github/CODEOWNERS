@@ -1,0 +1,16 @@
+# Code owners are asked to review pull requests that change the files they own.
+# Later lines take precedence over earlier ones.
+# See https://docs.github.com/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners
+
+# Everything in the repo.
+*                               @JhunDevRey
+
+# Sensitive areas. Changes here affect security, releases or every user, so they get a careful review.
+# (They have the same owner today; add more people here as the team grows.)
+/firestore.rules                @JhunDevRey
+/app/src/main/java/com/hcdc/hcdconnect/data/repository/  @JhunDevRey
+/app/google-services.json       @JhunDevRey
+/app/build.gradle.kts           @JhunDevRey
+/.github/                       @JhunDevRey
+/SECURITY.md                    @JhunDevRey
+/LICENSE                        @JhunDevRey
