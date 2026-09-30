@@ -23,6 +23,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - An `.editorconfig` with shared editor settings: UTF-8, LF line endings, 4-space indents (2 for YAML, JSON and Markdown), and a final newline.
 - A `.gitattributes` that stores and checks out text files with LF endings (CRLF for `.bat` files), marks images, fonts, JARs and keystores as binary, and shows Kotlin function names in diffs.
 - A `CODEOWNERS` file that asks @JhunDevRey to review every pull request, and marks security-sensitive files such as `firestore.rules`, the repositories and the workflows.
+- A review checklist that a workflow posts as a comment on each new Dependabot pull request, since Dependabot doesn't use the pull request template.
 - A `SUPPORT.md` with fixes for common problems and where to go for help.
 - Dependabot, which checks weekly for Gradle library and GitHub Actions updates and opens grouped pull requests for them.
 

@@ -1,0 +1,51 @@
+name: Dependabot checklist
+
+# Dependabot writes its own pull request descriptions and doesn't use
+# .github/pull_request_template.md, so this posts a review checklist as a comment instead.
+on:
+  # pull_request_target lets the workflow comment on Dependabot's pull requests.
+  # It never checks out or runs the pull request's code.
+  pull_request_target:
+    types: [opened, reopened]
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  checklist:
+    name: Post review checklist
+    if: github.event.pull_request.user.login == 'dependabot[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: Read Dependabot metadata
+        id: metadata
+        uses: dependabot/fetch-metadata@v3
+        with:
+          github-token: ${{ github.token }}
+
+      - name: Post checklist comment
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          PR: ${{ github.event.pull_request.number }}
+          UPDATE_TYPE: ${{ steps.metadata.outputs.update-type }}
+        run: |
+          # Post only once, even if the pull request is closed and reopened.
+          if gh pr view "$PR" --json comments --jq '.comments[].body' | grep -q 'dependabot-checklist'; then
+            echo "Checklist already posted."
+            exit 0
+          fi
+          case "$UPDATE_TYPE" in
+            version-update:semver-major) label="**Major**: may include breaking changes. Review carefully." ;;
+            version-update:semver-minor) label="Minor: new features, should be backward compatible." ;;
+            version-update:semver-patch) label="Patch: bug fixes only." ;;
+            *) label="Mixed or unknown. Check each dependency in the description above." ;;
+          esac
+          # Read the checklist from the base branch, never from the pull request.
+          gh api "repos/$GH_REPO/contents/.github/dependabot-pr-checklist.md?ref=${{ github.event.pull_request.base.ref }}" \
+            --jq '.content' | base64 --decode > checklist.md
+          LABEL="$label" python3 -c "import os; p='checklist.md'; s=open(p).read().replace('{{UPDATE_TYPE}}', os.environ['LABEL']); open(p,'w').write(s)"
+          gh pr comment "$PR" --body-file checklist.md
