@@ -75,3 +75,7 @@ firestore.rules         # Firestore security rules (mirrors the published rules)
 | `users` | user UID | `email`, `lastSignIn` |
 
 To make the first admin, create a document in `admins` with that user's UID as the document ID. After that, admins can manage roles in the app's **Manage users & clubs** screen.
+
+## License
+
+HCDConnect is released under the [MIT License](LICENSE).
