@@ -2,6 +2,14 @@
 
 HCDConnect is an Android app for campus events at Holy Cross of Davao College (HCDC). Students can browse and RSVP to events. Club organizers post and manage events for their club, and admins manage clubs and users.
 
+## Screenshots
+
+| Sign in | Events dashboard | Event details |
+|:---:|:---:|:---:|
+| <img src="docs/screenshots/login.png" width="240" alt="Sign-in screen"> | <img src="docs/screenshots/dashboard.png" width="240" alt="Events dashboard"> | <img src="docs/screenshots/event-details.png" width="240" alt="Event details with RSVP button"> |
+| **New event** | **Manage users & clubs** | **Dark mode** |
+| <img src="docs/screenshots/new-event.png" width="240" alt="New event form"> | <img src="docs/screenshots/manage-users.png" width="240" alt="Admin screen for managing users and clubs"> | <img src="docs/screenshots/dashboard-dark.png" width="240" alt="Events dashboard in dark mode"> |
+
 ## Features
 
 - **Event dashboard:** a live list of campus events with search, club filter chips, and tabs. Pull down to refresh.
