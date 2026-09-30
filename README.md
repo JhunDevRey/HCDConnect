@@ -116,6 +116,10 @@ The code is in `LoginActivity` (button), `LoginViewModel.sendPasswordReset()` (e
 
 To make the first admin, create a document in `admins` with that user's UID as the document ID. After that, admins can manage roles in the app's **Manage users & clubs** screen.
 
+## Getting help
+
+Having trouble? See [SUPPORT.md](SUPPORT.md) for common problems and where to ask for help.
+
 ## Contributing
 
 Contributions are welcome. See [CONTRIBUTING.md](CONTRIBUTING.md) for setup, conventions and how to send a pull request. Everyone taking part is expected to follow the [Code of Conduct](CODE_OF_CONDUCT.md). To report a security problem, see [SECURITY.md](SECURITY.md).

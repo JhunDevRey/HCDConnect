@@ -1,5 +1,8 @@
 blank_issues_enabled: false
 contact_links:
+  - name: Get help
+    url: https://github.com/JhunDevRey/HCDConnect/blob/main/SUPPORT.md
+    about: Fixes for common problems, and where to ask for help.
   - name: Report a security vulnerability
     url: https://github.com/JhunDevRey/HCDConnect/security/policy
     about: Please report security problems privately. Don't open a public issue.
