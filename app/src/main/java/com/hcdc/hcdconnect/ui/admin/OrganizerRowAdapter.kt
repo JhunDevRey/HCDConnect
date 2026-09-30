@@ -34,7 +34,7 @@ class OrganizerRowAdapter(
                         ?: context.getString(R.string.role_organizer_no_club)
                 )
             }
-            textClubs.text = roles.joinToString(" · ").ifEmpty { context.getString(R.string.role_member) }
+            textClubs.text = roles.joinToString(" · ").ifEmpty { context.getString(R.string.role_student) }
             root.setOnClickListener { onRowClick(row) }
         }
     }

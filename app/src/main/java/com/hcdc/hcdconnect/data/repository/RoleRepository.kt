@@ -11,8 +11,13 @@ data class UserRoles(
     val isAdmin: Boolean = false,
     val isOrganizer: Boolean = false,
     // The organizer's club, or null if they haven't joined one yet.
-    val organizerClub: String? = null
+    val organizerClub: String? = null,
+    // False until the roles have been read, so a student label never flashes for other users.
+    val isLoaded: Boolean = false
 ) {
+    /** Students (everyone without a role) can view events and RSVP, but can't post or manage. */
+    val isStudent: Boolean get() = isLoaded && !isAdmin && !isOrganizer
+
     /** Admins can post for any club; organizers need a club first. */
     val canPostEvents: Boolean get() = isAdmin || (isOrganizer && organizerClub != null)
 
@@ -43,7 +48,8 @@ class RoleRepository(
                 UserRoles(
                     isAdmin = adminResult.getOrDefault(false),
                     isOrganizer = entry != null,
-                    organizerClub = entry?.club
+                    organizerClub = entry?.club,
+                    isLoaded = true
                 )
             )
         }

@@ -18,7 +18,7 @@ HCDConnect is an Android app for campus events at Holy Cross of Davao College (H
 - **Event status:** Upcoming, Ongoing, Completed or Cancelled. Events that have already started show as Completed automatically.
 - **Campus time:** event times are always shown and entered in Asia/Manila time, whatever time zone the device is set to.
 - **Roles:**
-  - **Student:** any signed-in user. Can view events and RSVP.
+  - **Student:** any signed-in user without another role. Can view events and RSVP. The **New event** button and **Manage users & clubs** menu item are hidden.
   - **Organizer:** belongs to one club. Can create, edit and cancel that club's events.
   - **Admin:** can manage every event, club and organizer, and other admins.
 - **HCDC branding:** maroon and gold theme and the Lato font, with light and dark mode.

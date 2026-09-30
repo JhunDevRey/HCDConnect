@@ -188,6 +188,7 @@ class MainActivity : AppCompatActivity() {
             roles.isOrganizer && roles.organizerClub != null ->
                 getString(R.string.role_organizer_of, roles.organizerClub)
             roles.isOrganizer -> getString(R.string.role_organizer_no_club)
+            roles.isStudent -> getString(R.string.role_student)
             else -> null
         }
         return if (role == null) email else getString(R.string.subtitle_with_role, email, role)
