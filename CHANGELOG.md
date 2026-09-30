@@ -16,6 +16,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - A contributing guide (`CONTRIBUTING.md`).
 - A code of conduct (`CODE_OF_CONDUCT.md`), based on the Contributor Covenant 2.1.
 - A security policy (`SECURITY.md`) that explains how to report vulnerabilities privately.
+- Issue forms for bug reports and feature requests, and a pull request template.
 
 ### Changed
 

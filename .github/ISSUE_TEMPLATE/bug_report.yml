@@ -1,0 +1,70 @@
+name: Bug report
+description: Something in HCDConnect isn't working as it should.
+title: "[Bug]: "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting a bug. **Found a security problem?** Don't report it here. Follow [SECURITY.md](https://github.com/JhunDevRey/HCDConnect/blob/main/SECURITY.md) to report it privately.
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: Describe the problem, including any error message shown.
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. Sign in as an organizer
+        2. Tap "New event"
+        3. ...
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: What did you expect to happen?
+    validations:
+      required: true
+  - type: dropdown
+    id: role
+    attributes:
+      label: Which role were you signed in as?
+      options:
+        - Student
+        - Organizer
+        - Admin
+        - Not signed in
+    validations:
+      required: true
+  - type: input
+    id: device
+    attributes:
+      label: Device and Android version
+      placeholder: e.g. Pixel 5, Android 14
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: App version or commit
+      description: The app version, or the commit you built from.
+      placeholder: e.g. 1.0 or 22255f8
+  - type: textarea
+    id: screenshots
+    attributes:
+      label: Screenshots or recordings
+      description: Drag files here. Please hide real people's emails and other personal details.
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Before submitting
+      options:
+        - label: I searched the existing issues and this hasn't been reported yet.
+          required: true
+        - label: I agree to follow this project's [Code of Conduct](https://github.com/JhunDevRey/HCDConnect/blob/main/CODE_OF_CONDUCT.md).
+          required: true

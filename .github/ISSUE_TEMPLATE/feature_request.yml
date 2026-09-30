@@ -1,0 +1,45 @@
+name: Feature request
+description: Suggest an idea or improvement for HCDConnect.
+title: "[Feature]: "
+labels: ["enhancement"]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: What problem would this solve?
+      description: Describe what's hard or missing today.
+      placeholder: e.g. As an organizer, I can't tell how many people are going until I open each event.
+    validations:
+      required: true
+  - type: textarea
+    id: solution
+    attributes:
+      label: What would you like to happen?
+      description: Describe how you'd like it to work. Sketches and screenshots are welcome.
+    validations:
+      required: true
+  - type: dropdown
+    id: roles
+    attributes:
+      label: Who is this for?
+      multiple: true
+      options:
+        - Students
+        - Organizers
+        - Admins
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives you've considered
+      description: Other ways to solve the problem, or workarounds you use today.
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Before submitting
+      options:
+        - label: I searched the existing issues and this hasn't been suggested yet.
+          required: true
+        - label: I agree to follow this project's [Code of Conduct](https://github.com/JhunDevRey/HCDConnect/blob/main/CODE_OF_CONDUCT.md).
+          required: true
