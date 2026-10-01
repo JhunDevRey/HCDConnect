@@ -9,6 +9,7 @@ import com.hcdc.hcdconnect.data.model.CampusEvent
 import com.hcdc.hcdconnect.data.repository.AuthRepository
 import com.hcdc.hcdconnect.data.repository.CampusEventRepository
 import com.hcdc.hcdconnect.data.repository.RoleRepository
+import com.hcdc.hcdconnect.data.repository.UserRepository
 import com.hcdc.hcdconnect.data.repository.UserRoles
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -30,7 +31,9 @@ sealed interface EventDetailUiState {
         val event: CampusEvent,
         // Admins can edit and delete any event; organizers only their own, in their club.
         val canManage: Boolean,
-        val isGoing: Boolean
+        val isGoing: Boolean,
+        // Only admins can see who RSVP'd; everyone else sees just the count.
+        val canSeeAttendees: Boolean
     ) : EventDetailUiState
     data class Error(val message: String) : EventDetailUiState
 }
@@ -40,6 +43,9 @@ data class EventDetailActionState(
     val isUpdatingRsvp: Boolean = false,
     val isDeleting: Boolean = false,
     val isDeleted: Boolean = false,
+    val isLoadingAttendees: Boolean = false,
+    // Emails of the people going, for the admin's list; cleared with onAttendeesShown().
+    val attendees: List<String>? = null,
     // One-off message (string resource ID); cleared with onMessageShown().
     val message: Int? = null
 )
@@ -49,7 +55,8 @@ class EventDetailViewModel @JvmOverloads constructor(
     savedStateHandle: SavedStateHandle,
     private val repository: CampusEventRepository = CampusEventRepository(),
     private val authRepository: AuthRepository = AuthRepository(),
-    private val roleRepository: RoleRepository = RoleRepository()
+    private val roleRepository: RoleRepository = RoleRepository(),
+    private val userRepository: UserRepository = UserRepository()
 ) : ViewModel() {
 
     // Read from the launching Intent's extras, and kept across process death.
@@ -78,7 +85,8 @@ class EventDetailViewModel @JvmOverloads constructor(
                                     canManage = userRoles.canManageEvent(
                                         userId, event.createdBy, event.organizerClub
                                     ),
-                                    isGoing = event.isGoing(userId)
+                                    isGoing = event.isGoing(userId),
+                                    canSeeAttendees = userRoles.isAdmin
                                 )
                             },
                             onFailure = { EventDetailUiState.Error(it.message ?: "Failed to load event") }
@@ -139,6 +147,30 @@ class EventDetailViewModel @JvmOverloads constructor(
             }
         }
     }
+
+    fun showAttendees() {
+        val state = uiState.value as? EventDetailUiState.Success ?: return
+        if (!state.canSeeAttendees || _actionState.value.isLoadingAttendees) return
+
+        _actionState.update { it.copy(isLoadingAttendees = true) }
+        viewModelScope.launch {
+            val result = userRepository.getUsers(state.event.attendees)
+            _actionState.update {
+                result.fold(
+                    onSuccess = { users ->
+                        it.copy(
+                            isLoadingAttendees = false,
+                            attendees = users.map { user -> user.email.ifBlank { user.userId } }
+                                .sortedBy { email -> email.lowercase() }
+                        )
+                    },
+                    onFailure = { _ -> it.copy(isLoadingAttendees = false, message = R.string.error_load_attendees) }
+                )
+            }
+        }
+    }
+
+    fun onAttendeesShown() = _actionState.update { it.copy(attendees = null) }
 
     fun onMessageShown() = _actionState.update { it.copy(message = null) }
 }

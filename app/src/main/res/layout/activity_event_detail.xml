@@ -71,6 +71,15 @@
                 tools:text="12 going" />
 
             <com.google.android.material.button.MaterialButton
+                android:id="@+id/buttonSeeAttendees"
+                style="?attr/borderlessButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/see_attendees"
+                android:visibility="gone"
+                tools:visibility="visible" />
+
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/buttonRsvp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

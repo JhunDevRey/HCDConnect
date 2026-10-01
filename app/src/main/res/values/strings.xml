@@ -71,6 +71,9 @@
     <string name="nobody_going_yet">No one has RSVP\'d yet</string>
     <string name="rsvp_going">I\'m going</string>
     <string name="rsvp_cancel">Cancel my RSVP</string>
+    <string name="see_attendees">See who\'s going</string>
+    <string name="attendees_title">Going (%d)</string>
+    <string name="error_load_attendees">Couldn\'t load who\'s going. Try again.</string>
     <string name="error_rsvp">Couldn\'t update your RSVP. Try again.</string>
     <string name="no_description">No description</string>
 

@@ -5,6 +5,9 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.SetOptions
 import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
@@ -48,6 +51,21 @@ class UserRepository(
                 }
             }
         awaitClose { registration.remove() }
+    }
+
+    /**
+     * Admin only: the profiles of [userIds], in the same order. A user with no profile (they
+     * haven't opened the app since profiles were added) comes back with a blank email.
+     */
+    suspend fun getUsers(userIds: List<String>): Result<List<AppUser>> = try {
+        coroutineScope {
+            val docs = userIds.map { id -> async { users.document(id).get().await() } }.awaitAll()
+            Result.success(docs.map { AppUser(userId = it.id, email = it.getString(FIELD_EMAIL).orEmpty()) })
+        }
+    } catch (e: CancellationException) {
+        throw e
+    } catch (e: Exception) {
+        Result.failure(e)
     }
 
     /** Whether an admin has deleted [userId]. Users can check only themselves. */

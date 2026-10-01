@@ -73,6 +73,7 @@ class EventDetailActivity : AppCompatActivity() {
             }
             buttonRetry.setOnClickListener { viewModel.retry() }
             buttonRsvp.setOnClickListener { onRsvpClicked() }
+            buttonSeeAttendees.setOnClickListener { viewModel.showAttendees() }
         }
 
         lifecycleScope.launch {
@@ -191,6 +192,8 @@ class EventDetailActivity : AppCompatActivity() {
             resources.getQuantityString(R.plurals.going_count, count, count)
         }
         bindRsvpButton(buttonRsvp, event, state.isGoing)
+        buttonSeeAttendees.isVisible = state.canSeeAttendees && count > 0
+        buttonSeeAttendees.isEnabled = !viewModel.actionState.value.isLoadingAttendees
 
         // Keep this event's reminder in step with the RSVP and any edits to the event.
         EventReminderScheduler.sync(this@EventDetailActivity, event, AuthRepository().currentUser?.uid)
@@ -207,6 +210,11 @@ class EventDetailActivity : AppCompatActivity() {
         (viewModel.uiState.value as? EventDetailUiState.Success)?.let {
             bindRsvpButton(buttonRsvp, it.event, it.isGoing)
         }
+        buttonSeeAttendees.isEnabled = !state.isLoadingAttendees
+        state.attendees?.let {
+            showAttendees(it)
+            viewModel.onAttendeesShown()
+        }
         state.message?.let {
             Snackbar.make(root, it, Snackbar.LENGTH_LONG).show()
             viewModel.onMessageShown()
@@ -214,6 +222,14 @@ class EventDetailActivity : AppCompatActivity() {
         if (state.isDeleted) {
             finish()
         }
+    }
+
+    private fun showAttendees(emails: List<String>) {
+        MaterialAlertDialogBuilder(this)
+            .setTitle(getString(R.string.attendees_title, emails.size))
+            .setItems(emails.toTypedArray(), null)
+            .setPositiveButton(android.R.string.ok, null)
+            .show()
     }
 
     private fun confirmDelete() {
