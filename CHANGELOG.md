@@ -32,6 +32,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 - The dashboard header now shows only the role, such as "Organizer of Student Council". The email moved to the ⋮ menu. Before, long emails pushed the role off the edge of the header.
 - The help text on **Manage users & clubs** now explains what students can do.
+- Updated the build tools and libraries: Gradle 9.8.0, Android Gradle Plugin 9.4.1, AndroidX Core 1.19.1, Lifecycle 2.11.0, WorkManager 2.12.0, SwipeRefreshLayout 1.2.0 and Kotlin coroutines 1.11.0. The app now compiles against Android API 37 (Core 1.19 needs it). The target SDK stays at 36, so the app behaves the same on devices.
 
 ## [1.0] - 2026-10-01
 

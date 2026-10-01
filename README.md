@@ -49,7 +49,7 @@ Organizers get the **New event** button and can post only for their own club. Th
 - MVVM with ViewModel, coroutines and `StateFlow`
 - Firebase Authentication (email and password) and Cloud Firestore
 - WorkManager for event reminders
-- Min SDK 26, target SDK 36
+- Min SDK 26, target SDK 36, compile SDK 37
 
 ## Project structure
 

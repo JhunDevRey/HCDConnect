@@ -10,8 +10,8 @@ val releaseKeystorePath: String? = System.getenv("HCD_KEYSTORE_PATH")
 android {
     namespace = "com.hcdc.hcdconnect"
     compileSdk {
-        version = release(36) {
-            minorApiLevel = 1
+        version = release(37) {
+            minorApiLevel = 2
         }
     }
 
