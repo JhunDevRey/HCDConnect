@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
+import androidx.annotation.StringRes
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
@@ -83,10 +84,7 @@ class MainActivity : AppCompatActivity() {
                     true
                 }
                 R.id.action_sign_out -> {
-                    // Reminders belong to this account's RSVPs.
-                    EventReminderScheduler.cancelAll(this)
-                    authRepository.signOut()
-                    startActivity(LoginActivity.newIntent(this))
+                    signOut()
                     true
                 }
                 else -> false
@@ -118,6 +116,10 @@ class MainActivity : AppCompatActivity() {
                 launch { viewModel.uiState.collect(::render) }
                 launch {
                     viewModel.roles.collect { roles ->
+                        if (roles.isRemoved) {
+                            signOut(R.string.account_removed)
+                            return@collect
+                        }
                         binding.fabNewEvent.isVisible = roles.showsNewEventButton
                         binding.toolbar.menu.findItem(R.id.action_manage_organizers).isVisible = roles.isAdmin
                         binding.toolbar.subtitle = subtitleFor(roles)
@@ -181,6 +183,15 @@ class MainActivity : AppCompatActivity() {
                 return true
             }
         })
+    }
+
+    /** Signs out and goes to the login screen, which shows [message] if given. */
+    private fun signOut(@StringRes message: Int? = null) {
+        // Reminders belong to this account's RSVPs.
+        EventReminderScheduler.cancelAll(this)
+        authRepository.signOut()
+        startActivity(LoginActivity.newIntent(this, message))
+        finish()
     }
 
     /** The role only; the email is in the menu, so the toolbar never cuts the role off. */

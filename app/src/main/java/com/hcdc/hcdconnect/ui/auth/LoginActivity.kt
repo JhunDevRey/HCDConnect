@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
+import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -64,6 +65,13 @@ class LoginActivity : AppCompatActivity() {
                 viewModel.uiState.collect(::render)
             }
         }
+
+        // Shown once, not again after rotation.
+        if (savedInstanceState == null) {
+            intent.getIntExtra(EXTRA_MESSAGE, 0).takeIf { it != 0 }?.let {
+                Snackbar.make(binding.root, it, Snackbar.LENGTH_LONG).show()
+            }
+        }
     }
 
     private fun render(state: LoginUiState) = with(binding) {
@@ -96,9 +104,15 @@ class LoginActivity : AppCompatActivity() {
     }
 
     companion object {
-        /** Opens the login screen as a fresh task, e.g. after signing out. */
-        fun newIntent(context: Context): Intent =
+        private const val EXTRA_MESSAGE = "message"
+
+        /**
+         * Opens the login screen as a fresh task, e.g. after signing out, optionally
+         * showing [message], such as why the user was signed out.
+         */
+        fun newIntent(context: Context, @StringRes message: Int? = null): Intent =
             Intent(context, LoginActivity::class.java)
                 .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                .apply { if (message != null) putExtra(EXTRA_MESSAGE, message) }
     }
 }

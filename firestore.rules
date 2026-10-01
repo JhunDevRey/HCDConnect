@@ -8,9 +8,12 @@ service cloud.firestore {
     // Organizer: listed in /organizers with at most one club in `clubs`. Can post and
     //   manage events for that club only, and can pick the club themselves, once.
     // Everyone else signed in: can view events and RSVP.
+    // Removed: deleted by an admin and listed in /removedUsers. Treated as signed out, so
+    //   they can't do anything. (The free plan can't delete their sign-in account itself.)
 
     function isSignedIn() {
-      return request.auth != null;
+      return request.auth != null
+          && !exists(/databases/$(database)/documents/removedUsers/$(request.auth.uid));
     }
 
     function isAdmin() {
@@ -127,7 +130,24 @@ service cloud.firestore {
                             && request.resource.data.keys().hasOnly(['email', 'lastSignIn'])
                             && request.resource.data.email == request.auth.token.email
                             && request.resource.data.lastSignIn == request.time;
-      allow delete: if false;
+      // Admins delete users (see /removedUsers), but not themselves.
+      allow delete: if isAdmin() && userId != request.auth.uid;
+    }
+
+    // Users deleted by an admin: {email, removedBy, removedAt}.
+    match /removedUsers/{userId} {
+      // Users can check whether they've been removed, even though they're blocked from
+      // everything else, so the app can tell them. Admins can see the whole list.
+      allow read: if (request.auth != null && request.auth.uid == userId) || isAdmin();
+      // Admins remove anyone but themselves, in their own name.
+      allow create: if isAdmin()
+                    && userId != request.auth.uid
+                    && request.resource.data.keys().hasOnly(['email', 'removedBy', 'removedAt'])
+                    && request.resource.data.removedBy == request.auth.uid
+                    && request.resource.data.removedAt == request.time;
+      allow update: if false;
+      // Deleting the entry restores the user (they sign in again as a student).
+      allow delete: if isAdmin();
     }
 
     match /admins/{userId} {

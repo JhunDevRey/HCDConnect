@@ -85,7 +85,7 @@
     <string name="error_delete_event">Couldn\'t delete the event. Try again.</string>
     <!-- Admin -->
     <string name="manage_organizers">Manage users &amp; clubs</string>
-    <string name="manage_organizers_help">Tap a user to change their role. Admins have full access; organizers post events for one club only; everyone else is a student, who can view events and RSVP. Users appear here after they sign in once.</string>
+    <string name="manage_organizers_help">Tap a user to change their role or delete them. Admins have full access; organizers post events for one club only; everyone else is a student, who can view events and RSVP. Users appear here after they sign in once.</string>
     <string name="hint_search_email">Search by email</string>
     <string name="error_loading_users">Couldn\'t load users: %1$s</string>
     <string name="no_users_found">No users found.</string>
@@ -116,6 +116,12 @@
     <string name="organizer_club_helper">Organizers post only for this club. Leave it as \"No club yet\" to let them choose once.</string>
     <string name="no_club_yet">No club yet</string>
     <string name="roles_saved">Roles updated</string>
+    <string name="delete_user">Delete this user</string>
+    <string name="delete_user_title">Delete %1$s?</string>
+    <string name="delete_user_message">They\'ll be signed out and won\'t be able to use HCDConnect again. Their roles and RSVPs are removed. Events they posted stay.</string>
+    <string name="user_deleted">User deleted</string>
+    <string name="error_deleting_user">Couldn\'t delete the user. Try again.</string>
+    <string name="account_removed">This account has been removed by an admin.</string>
     <string name="error_saving_roles">Couldn\'t update roles. Try again.</string>
     <string name="clubs">Clubs</string>
     <string name="clubs_help">The official club list. Organizers can only pick from these, and every event must use one.</string>

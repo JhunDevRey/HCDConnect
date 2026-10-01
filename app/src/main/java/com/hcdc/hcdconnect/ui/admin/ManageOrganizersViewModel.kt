@@ -124,6 +124,15 @@ class ManageOrganizersViewModel(
         }
     }
 
+    /** Deletes [row]'s user from the app. Admins can't delete themselves. */
+    fun deleteUser(row: UserRow) {
+        val adminId = currentUserId ?: return
+        if (row.isSelf) return
+        runAction(R.string.user_deleted, R.string.error_deleting_user) {
+            userRepository.removeUser(row.user.userId, row.user.email, adminId).getOrThrow()
+        }
+    }
+
     fun addClub(name: String) {
         if (!ClubRepository.isValidName(name.trim())) {
             _actionState.update { it.copy(message = R.string.error_club_name) }

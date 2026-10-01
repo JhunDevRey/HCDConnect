@@ -23,6 +23,9 @@ Organizers can post only for their own club. The header shows which one, for exa
 **Event times look wrong.**
 The app always shows event times in campus time (Philippine time, Asia/Manila), even if your phone is set to another time zone. This keeps everyone on the same schedule.
 
+**It says "This account has been removed by an admin."**
+An admin deleted your account from HCDConnect, so you can't use the app with it. If you think this is a mistake, contact your club or campus admin. Admins can restore accounts.
+
 **I'm not getting event reminders.**
 Reminders come an hour before events you've tapped **I'm going** on. Make sure notifications are allowed for HCDConnect in your phone's settings, under **Settings → Apps → HCDConnect → Notifications**. On Android 13 and later, the app asks for permission the first time you RSVP.
 

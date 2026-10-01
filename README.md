@@ -40,7 +40,7 @@ Organizers get the **New event** button and can post only for their own club. Th
 - **Roles:**
   - **Student:** any signed-in user without another role. Can view events and RSVP. The **New event** button and **Manage users & clubs** menu item are hidden.
   - **Organizer:** belongs to one club. Can create, edit and cancel that club's events.
-  - **Admin:** can manage every event, club and organizer, and other admins.
+  - **Admin:** can manage every event, club and organizer, and other admins. Admins can also delete any user except themselves: tap the user in **Manage users & clubs**, then **Delete this user**.
 - **HCDC branding:** maroon and gold theme and the Lato font, with light and dark mode.
 
 ## Tech stack
@@ -113,8 +113,11 @@ The code is in `LoginActivity` (button), `LoginViewModel.sendPasswordReset()` (e
 | `organizers` | user UID | `email`, `clubs` (at most one club) |
 | `admins` | user UID | Marks the user as an admin |
 | `users` | user UID | `email`, `lastSignIn` |
+| `removedUsers` | user UID | `email`, `removedBy`, `removedAt`. Users deleted by an admin; the rules block them from everything |
 
 To make the first admin, create a document in `admins` with that user's UID as the document ID. After that, admins can manage roles in the app's **Manage users & clubs** screen.
+
+Deleting a user adds them to `removedUsers` and deletes their profile, roles and RSVPs in one step. Events they posted stay. The free Firebase plan can't delete sign-in accounts from the app, so their account still exists but can't use the app; if they sign in, they're told the account was removed. To restore someone, delete their document in `removedUsers` in the Firebase console. They'll come back as a student.
 
 ## Getting help
 

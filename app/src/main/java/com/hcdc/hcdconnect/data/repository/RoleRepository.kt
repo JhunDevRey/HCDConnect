@@ -13,10 +13,12 @@ data class UserRoles(
     // The organizer's club, or null if they haven't joined one yet.
     val organizerClub: String? = null,
     // False until the roles have been read, so a student label never flashes for other users.
-    val isLoaded: Boolean = false
+    val isLoaded: Boolean = false,
+    // An admin deleted this user. The rules block them from everything, so the app signs them out.
+    val isRemoved: Boolean = false
 ) {
     /** Students (everyone without a role) can view events and RSVP, but can't post or manage. */
-    val isStudent: Boolean get() = isLoaded && !isAdmin && !isOrganizer
+    val isStudent: Boolean get() = isLoaded && !isRemoved && !isAdmin && !isOrganizer
 
     /** Admins can post for any club; organizers need a club first. */
     val canPostEvents: Boolean get() = isAdmin || (isOrganizer && organizerClub != null)
@@ -31,10 +33,16 @@ data class UserRoles(
 
 class RoleRepository(
     private val adminRepository: AdminRepository = AdminRepository(),
-    private val organizerRepository: OrganizerRepository = OrganizerRepository()
+    private val organizerRepository: OrganizerRepository = OrganizerRepository(),
+    private val userRepository: UserRepository = UserRepository()
 ) {
 
     suspend fun getRoles(userId: String): Result<UserRoles> = coroutineScope {
+        // Checked first: a removed user can't read their roles, so those reads would fail.
+        val removed = userRepository.isRemoved(userId)
+        if (removed.getOrNull() == true) {
+            return@coroutineScope Result.success(UserRoles(isLoaded = true, isRemoved = true))
+        }
         val admin = async { adminRepository.isAdmin(userId) }
         val organizer = async { organizerRepository.getOrganizer(userId) }
         val adminResult = admin.await()

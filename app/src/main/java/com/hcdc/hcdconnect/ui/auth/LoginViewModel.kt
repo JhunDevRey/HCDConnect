@@ -13,6 +13,7 @@ import com.google.firebase.auth.FirebaseAuthUserCollisionException
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException
 import com.hcdc.hcdconnect.R
 import com.hcdc.hcdconnect.data.repository.AuthRepository
+import com.hcdc.hcdconnect.data.repository.UserRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -33,7 +34,8 @@ data class LoginUiState(
 )
 
 class LoginViewModel(
-    private val authRepository: AuthRepository = AuthRepository()
+    private val authRepository: AuthRepository = AuthRepository(),
+    private val userRepository: UserRepository = UserRepository()
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(LoginUiState())
@@ -85,7 +87,19 @@ class LoginViewModel(
                 AuthMode.SIGN_UP -> authRepository.signUp(trimmedEmail, password)
             }
             result.fold(
-                onSuccess = { _uiState.update { it.copy(isLoading = false, isSignedIn = true) } },
+                onSuccess = {
+                    // Deleted users can still sign in to Firebase, so turn them away here.
+                    // If the check fails (e.g. offline), the dashboard checks again.
+                    val userId = authRepository.currentUser?.uid
+                    val removed = state.mode == AuthMode.SIGN_IN && userId != null &&
+                        userRepository.isRemoved(userId).getOrNull() == true
+                    if (removed) {
+                        authRepository.signOut()
+                        _uiState.update { it.copy(isLoading = false, message = R.string.account_removed) }
+                    } else {
+                        _uiState.update { it.copy(isLoading = false, isSignedIn = true) }
+                    }
+                },
                 onFailure = { e ->
                     _uiState.update { it.copy(isLoading = false, message = messageFor(e)) }
                 }

@@ -8,6 +8,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Added
 
+- Admins can delete users. In **Manage users & clubs**, tap a user, then **Delete this user**, then confirm. The user is signed out and blocked from the app, and their roles and RSVPs are removed. Events they posted stay. Admins can't delete themselves.
 - A **Student** role label for signed-in users who aren't admins or organizers. It shows in the dashboard header and in **Manage users & clubs**, where it replaces "Member".
 - A "Signed in as <email>" line at the top of the dashboard's ⋮ menu.
 - README with features, setup, the Firestore data model, the password reset steps, and screenshots of the student, organizer and admin views.

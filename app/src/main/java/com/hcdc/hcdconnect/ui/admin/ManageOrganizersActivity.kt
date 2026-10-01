@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
@@ -11,6 +12,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.google.android.material.chip.Chip
+import com.google.android.material.color.MaterialColors
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import com.hcdc.hcdconnect.R
@@ -20,7 +22,10 @@ import com.hcdc.hcdconnect.databinding.DialogEditRolesBinding
 import com.hcdc.hcdconnect.databinding.DialogManageClubsBinding
 import kotlinx.coroutines.launch
 
-/** Admin-only screen: give users admin or organizer roles, set organizers' clubs, and manage the club list. */
+/**
+ * Admin-only screen: give users admin or organizer roles, set organizers' clubs, delete users,
+ * and manage the club list.
+ */
 class ManageOrganizersActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityManageOrganizersBinding
@@ -97,7 +102,7 @@ class ManageOrganizersActivity : AppCompatActivity() {
             switchOrganizer.setOnCheckedChangeListener { _, checked -> layoutClub.isEnabled = checked }
         }
 
-        MaterialAlertDialogBuilder(this)
+        val builder = MaterialAlertDialogBuilder(this)
             .setTitle(row.user.email)
             .setView(dialogBinding.root)
             .setNegativeButton(android.R.string.cancel, null)
@@ -111,6 +116,21 @@ class ManageOrganizersActivity : AppCompatActivity() {
                     club = picked.takeIf { isOrganizer && it != noClub && it.isNotBlank() }
                 )
             }
+        // Admins can delete anyone but themselves.
+        if (!row.isSelf) {
+            builder.setNeutralButton(R.string.delete_user) { _, _ -> confirmDeleteUser(row) }
+        }
+        val dialog = builder.show()
+        dialog.getButton(AlertDialog.BUTTON_NEUTRAL)
+            ?.setTextColor(MaterialColors.getColor(dialog.window!!.decorView, androidx.appcompat.R.attr.colorError))
+    }
+
+    private fun confirmDeleteUser(row: UserRow) {
+        MaterialAlertDialogBuilder(this)
+            .setTitle(getString(R.string.delete_user_title, row.user.email))
+            .setMessage(R.string.delete_user_message)
+            .setNegativeButton(android.R.string.cancel, null)
+            .setPositiveButton(R.string.delete) { _, _ -> viewModel.deleteUser(row) }
             .show()
     }
 
