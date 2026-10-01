@@ -130,7 +130,7 @@ class ManageOrganizersActivity : AppCompatActivity() {
             .setTitle(getString(R.string.delete_user_title, row.user.email))
             .setMessage(R.string.delete_user_message)
             .setNegativeButton(android.R.string.cancel, null)
-            .setPositiveButton(R.string.delete) { _, _ -> viewModel.deleteUser(row) }
+            .setPositiveButton(R.string.delete_user_confirm) { _, _ -> viewModel.deleteUser(row) }
             .show()
     }
 

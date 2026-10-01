@@ -118,6 +118,7 @@
     <string name="roles_saved">Roles updated</string>
     <string name="delete_user">Delete this user</string>
     <string name="delete_user_title">Delete %1$s?</string>
+    <string name="delete_user_confirm">Delete</string>
     <string name="delete_user_message">They\'ll be signed out and won\'t be able to use HCDConnect again. Their roles and RSVPs are removed. Events they posted stay.</string>
     <string name="user_deleted">User deleted</string>
     <string name="error_deleting_user">Couldn\'t delete the user. Try again.</string>
