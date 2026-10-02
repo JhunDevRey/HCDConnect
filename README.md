@@ -26,21 +26,21 @@ Organizers get the **New event** button and can post only for their own club. Th
 
 | Sign in | Events dashboard | Event details |
 |:---:|:---:|:---:|
-| <img src="docs/screenshots/login.png" width="240" alt="Sign-in screen"> | <img src="docs/screenshots/dashboard.png" width="240" alt="Events dashboard"> | <img src="docs/screenshots/event-details.png" width="240" alt="Event details with RSVP button"> |
+| <img src="docs/screenshots/login.png" width="240" alt="Sign-in screen"> | <img src="docs/screenshots/dashboard.png" width="240" alt="Events dashboard"> | <img src="docs/screenshots/event-details.png" width="240" alt="Event details with RSVP button and the admin's See who's going link"> |
 | **New event** | **Manage users & clubs** | **Dark mode** |
 | <img src="docs/screenshots/new-event.png" width="240" alt="New event form"> | <img src="docs/screenshots/manage-users.png" width="240" alt="Admin screen for managing users and clubs"> | <img src="docs/screenshots/dashboard-dark.png" width="240" alt="Events dashboard in dark mode"> |
 
 ## Features
 
 - **Event dashboard:** a live list of campus events with search, club filter chips, and tabs. Pull down to refresh.
-- **Event details and RSVP:** open an event to see when and where it is and what it's about, mark yourself as going, or share it.
+- **Event details and RSVP:** open an event to see when and where it is and what it's about, mark yourself as going, or share it. Admins can also tap **See who's going** to list the emails of everyone who RSVP'd.
 - **Event reminders:** a notification before events you've RSVP'd to.
 - **Event status:** Upcoming, Ongoing, Completed or Cancelled. Events that have already started show as Completed automatically.
 - **Campus time:** event times are always shown and entered in Asia/Manila time, whatever time zone the device is set to.
 - **Roles:**
   - **Student:** any signed-in user without another role. Can view events and RSVP. The **New event** button and **Manage users & clubs** menu item are hidden.
   - **Organizer:** belongs to one club. Can create, edit and cancel that club's events.
-  - **Admin:** can manage every event, club and organizer, and other admins. Admins can also delete any user except themselves: tap the user in **Manage users & clubs**, then **Delete this user**.
+  - **Admin:** can manage every event, club and organizer, and other admins, and can see who RSVP'd to each event. Admins can also delete any user except themselves: tap the user in **Manage users & clubs**, then **Delete this user**.
 - **HCDC branding:** maroon and gold theme and the Lato font, with light and dark mode.
 
 ## Tech stack
@@ -108,7 +108,7 @@ The code is in `LoginActivity` (button), `LoginViewModel.sendPasswordReset()` (e
 
 | Collection | Document ID | Contents |
 |---|---|---|
-| `events` | auto | `title`, `organizerClub`, `date`, `location`, `description`, `status`, `createdBy`, `attendees` |
+| `events` | auto | `title`, `organizerClub`, `date`, `location`, `description`, `status`, `createdBy`, `attendees` (UIDs of the users going) |
 | `clubs` | club name | One document per club |
 | `organizers` | user UID | `email`, `clubs` (at most one club) |
 | `admins` | user UID | Marks the user as an admin |
