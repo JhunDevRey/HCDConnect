@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+## [1.1.0] - 2026-11-07
+
 ### Added
 
 - Admins can see who RSVP'd to an event. On the event's details, tap **See who's going** under the count to list the emails of everyone going. Students and organizers still see only the count.
@@ -55,5 +57,6 @@ First version.
 - Firestore security rules that enforce the same roles.
 - HCDC maroon and gold theme with the Lato font, in light and dark mode.
 
-[Unreleased]: https://github.com/JhunDevRey/HCDConnect/compare/a6be791...main
+[Unreleased]: https://github.com/JhunDevRey/HCDConnect/compare/v1.1.0...main
+[1.1.0]: https://github.com/JhunDevRey/HCDConnect/compare/a6be791...v1.1.0
 [1.0]: https://github.com/JhunDevRey/HCDConnect/commit/a6be791
