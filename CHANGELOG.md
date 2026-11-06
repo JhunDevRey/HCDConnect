@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+## [1.2.0] - 2026-11-07
+
 ### Added
 
 - A separate **Register** screen. Tap **Don't have an account? Register** on the sign-in screen, then enter your full name, school email, password and password confirmation. Only `@hcdc.edu.ph` addresses can register; existing accounts with other addresses can still sign in. The full name is saved to the user's Firebase profile and to `users/{uid}.fullName`.
@@ -67,6 +69,7 @@ First version.
 - Firestore security rules that enforce the same roles.
 - HCDC maroon and gold theme with the Lato font, in light and dark mode.
 
-[Unreleased]: https://github.com/JhunDevRey/HCDConnect/compare/v1.1.0...main
+[Unreleased]: https://github.com/JhunDevRey/HCDConnect/compare/v1.2.0...main
+[1.2.0]: https://github.com/JhunDevRey/HCDConnect/compare/v1.1.0...v1.2.0
 [1.1.0]: https://github.com/JhunDevRey/HCDConnect/compare/a6be791...v1.1.0
 [1.0]: https://github.com/JhunDevRey/HCDConnect/commit/a6be791
