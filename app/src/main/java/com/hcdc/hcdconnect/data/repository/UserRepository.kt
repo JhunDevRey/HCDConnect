@@ -27,11 +27,17 @@ class UserRepository(
     private val users get() = firestore.collection(COLLECTION_USERS)
     private val removedUsers get() = firestore.collection(COLLECTION_REMOVED_USERS)
 
-    /** Creates or refreshes the signed-in user's profile. The rules only allow writing your own. */
-    suspend fun recordSignIn(userId: String, email: String): Result<Unit> = try {
-        users.document(userId)
-            .set(mapOf(FIELD_EMAIL to email, FIELD_LAST_SIGN_IN to FieldValue.serverTimestamp()), SetOptions.merge())
-            .await()
+    /**
+     * Creates or refreshes the signed-in user's profile. The rules only allow writing your own.
+     * [fullName] is set at registration; accounts made before then have none, so it's left out.
+     */
+    suspend fun recordSignIn(userId: String, email: String, fullName: String?): Result<Unit> = try {
+        val profile = buildMap<String, Any> {
+            put(FIELD_EMAIL, email)
+            put(FIELD_LAST_SIGN_IN, FieldValue.serverTimestamp())
+            if (!fullName.isNullOrBlank()) put(FIELD_FULL_NAME, fullName)
+        }
+        users.document(userId).set(profile, SetOptions.merge()).await()
         Result.success(Unit)
     } catch (e: CancellationException) {
         throw e
@@ -114,6 +120,7 @@ class UserRepository(
         const val COLLECTION_ADMINS = "admins"
         const val FIELD_EMAIL = "email"
         const val FIELD_LAST_SIGN_IN = "lastSignIn"
+        const val FIELD_FULL_NAME = "fullName"
         const val FIELD_ATTENDEES = "attendees"
         const val FIELD_REMOVED_BY = "removedBy"
         const val FIELD_REMOVED_AT = "removedAt"

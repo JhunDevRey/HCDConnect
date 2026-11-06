@@ -6,6 +6,15 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### Added
+
+- A separate **Register** screen. Tap **Don't have an account? Register** on the sign-in screen, then enter your full name, school email, password and password confirmation. Only `@hcdc.edu.ph` addresses can register; existing accounts with other addresses can still sign in. The full name is saved to the user's Firebase profile and to `users/{uid}.fullName`.
+
+### Changed
+
+- The sign-in screen now only signs in. Registering moved to its own screen.
+- `firestore.rules` lets users save an optional `fullName` (1–100 characters) on their own profile.
+
 ## [1.1.0] - 2026-11-07
 
 ### Added

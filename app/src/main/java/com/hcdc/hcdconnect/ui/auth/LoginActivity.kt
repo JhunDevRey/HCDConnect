@@ -16,7 +16,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.google.android.material.snackbar.Snackbar
 import com.hcdc.hcdconnect.MainActivity
-import com.hcdc.hcdconnect.R
 import com.hcdc.hcdconnect.databinding.ActivityLoginBinding
 import kotlinx.coroutines.launch
 
@@ -42,21 +41,20 @@ class LoginActivity : AppCompatActivity() {
         with(binding) {
             editEmail.doAfterTextChanged { viewModel.onEmailEdited() }
             editPassword.doAfterTextChanged { viewModel.onPasswordEdited() }
-            editConfirmPassword.doAfterTextChanged { viewModel.onConfirmPasswordEdited() }
 
             buttonSubmit.setOnClickListener {
-                viewModel.submit(
+                viewModel.signIn(
                     email = editEmail.text.toString(),
-                    password = editPassword.text.toString(),
-                    confirmPassword = editConfirmPassword.text.toString()
+                    password = editPassword.text.toString()
                 )
             }
             buttonForgotPassword.setOnClickListener {
                 viewModel.sendPasswordReset(editEmail.text.toString())
             }
-            buttonToggleMode.setOnClickListener {
-                editConfirmPassword.text = null
-                viewModel.toggleMode()
+            buttonGoToRegister.setOnClickListener {
+                startActivity(
+                    RegisterActivity.newIntent(this@LoginActivity, editEmail.text?.toString()?.trim())
+                )
             }
         }
 
@@ -81,21 +79,13 @@ class LoginActivity : AppCompatActivity() {
             return@with
         }
 
-        val isSignUp = state.mode == AuthMode.SIGN_UP
-        textHeading.setText(if (isSignUp) R.string.create_account_heading else R.string.sign_in_heading)
-        buttonSubmit.setText(if (isSignUp) R.string.create_account else R.string.sign_in)
-        buttonToggleMode.setText(if (isSignUp) R.string.have_account_prompt else R.string.no_account_prompt)
-        layoutConfirmPassword.isVisible = isSignUp
-        buttonForgotPassword.isVisible = !isSignUp
-
         layoutEmail.error = state.emailError?.let(::getString)
         layoutPassword.error = state.passwordError?.let(::getString)
-        layoutConfirmPassword.error = state.confirmPasswordError?.let(::getString)
 
         progressIndicator.isVisible = state.isLoading
         buttonSubmit.isEnabled = !state.isLoading
         buttonForgotPassword.isEnabled = !state.isLoading
-        buttonToggleMode.isEnabled = !state.isLoading
+        buttonGoToRegister.isEnabled = !state.isLoading
 
         state.message?.let {
             Snackbar.make(root, it, Snackbar.LENGTH_LONG).show()

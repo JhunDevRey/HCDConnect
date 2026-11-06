@@ -125,11 +125,16 @@ service cloud.firestore {
       // Profiles let admins find people to give roles to.
       allow read: if isSignedIn() && (request.auth.uid == userId || isAdmin());
       // Each user writes only their own profile, with the email from their sign-in.
+      // fullName comes from registration; accounts made before then don't have one.
       allow create, update: if isSignedIn()
                             && request.auth.uid == userId
-                            && request.resource.data.keys().hasOnly(['email', 'lastSignIn'])
+                            && request.resource.data.keys().hasOnly(['email', 'lastSignIn', 'fullName'])
                             && request.resource.data.email == request.auth.token.email
-                            && request.resource.data.lastSignIn == request.time;
+                            && request.resource.data.lastSignIn == request.time
+                            && (!('fullName' in request.resource.data)
+                                || (request.resource.data.fullName is string
+                                    && request.resource.data.fullName.size() > 0
+                                    && request.resource.data.fullName.size() <= 100));
       // Admins delete users (see /removedUsers), but not themselves.
       allow delete: if isAdmin() && userId != request.auth.uid;
     }

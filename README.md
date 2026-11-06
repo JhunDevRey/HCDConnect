@@ -44,6 +44,7 @@ Organizers get the **New event** button and can post only for their own club. Th
 
 ## Features
 
+- **Accounts:** sign in with email and password, or tap **Register** to open the sign-up screen and enter your full name, school email (`@hcdc.edu.ph`), password and password confirmation. New accounts start as students and go straight to the dashboard. Sign out from the dashboard's ⋮ menu.
 - **Event dashboard:** a live list of campus events with search, club filter chips, and tabs. Pull down to refresh.
 - **Event details and RSVP:** open an event to see when and where it is and what it's about, mark yourself as going, or share it. Admins can also tap **See who's going** to list the emails of everyone who RSVP'd.
 - **Event reminders:** a notification before events you've RSVP'd to.
@@ -72,7 +73,7 @@ app/src/main/java/com/hcdc/hcdconnect/
 │   └── repository/     # Auth, events, clubs, organizers, roles, users (Firestore)
 ├── reminders/          # Scheduling and posting event reminder notifications
 ├── ui/
-│   ├── auth/           # Login
+│   ├── auth/           # Login and register
 │   ├── dashboard/      # Event list, filters and adapter
 │   ├── eventdetail/    # Event details and RSVP
 │   ├── createevent/    # Create and edit events
@@ -124,7 +125,7 @@ The code is in `LoginActivity` (button), `LoginViewModel.sendPasswordReset()` (e
 | `clubs` | club name | One document per club |
 | `organizers` | user UID | `email`, `clubs` (at most one club) |
 | `admins` | user UID | Marks the user as an admin |
-| `users` | user UID | `email`, `lastSignIn` |
+| `users` | user UID | `email`, `lastSignIn`, `fullName` (set at registration; older accounts don't have one) |
 | `removedUsers` | user UID | `email`, `removedBy`, `removedAt`. Users deleted by an admin; the rules block them from everything |
 
 To make the first admin, create a document in `admins` with that user's UID as the document ID. After that, admins can manage roles in the app's **Manage users & clubs** screen.

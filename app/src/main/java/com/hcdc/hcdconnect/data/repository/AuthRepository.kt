@@ -2,6 +2,7 @@ package com.hcdc.hcdconnect.data.repository
 
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.auth.userProfileChangeRequest
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.tasks.await
 
@@ -17,9 +18,14 @@ class AuthRepository(
         auth.signInWithEmailAndPassword(email, password).await()
     }
 
-    /** Creates the account and signs the new user in. */
-    suspend fun signUp(email: String, password: String): Result<Unit> = runAuth {
-        auth.createUserWithEmailAndPassword(email, password).await()
+    /**
+     * Creates the account, signs the new user in and saves [fullName] as their display name.
+     * The dashboard copies it into the user's Firestore profile.
+     */
+    suspend fun signUp(email: String, password: String, fullName: String): Result<Unit> = runAuth {
+        val user = auth.createUserWithEmailAndPassword(email, password).await().user
+            ?: error("Sign-up returned no user")
+        user.updateProfile(userProfileChangeRequest { displayName = fullName }).await()
     }
 
     suspend fun sendPasswordReset(email: String): Result<Unit> = runAuth {

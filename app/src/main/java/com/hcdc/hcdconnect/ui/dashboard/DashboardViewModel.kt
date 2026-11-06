@@ -143,7 +143,7 @@ class DashboardViewModel(
     private fun recordSignIn() {
         val user = authRepository.currentUser ?: return
         val email = user.email ?: return
-        viewModelScope.launch { userRepository.recordSignIn(user.uid, email) }
+        viewModelScope.launch { userRepository.recordSignIn(user.uid, email, user.displayName) }
     }
 
     private fun checkRoles() {
