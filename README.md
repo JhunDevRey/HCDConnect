@@ -4,6 +4,18 @@
 
 HCDConnect is an Android app for campus events at Holy Cross of Davao College (HCDC). Students can browse and RSVP to events. Club organizers post and manage events for their club, and admins manage clubs and users.
 
+## Download
+
+**[Download the latest HCDConnect APK](https://github.com/JhunDevRey/HCDConnect/releases/latest)**: on the release page, tap `HCDConnect-<version>.apk` under **Assets**.
+
+To install it on your Android phone:
+
+1. Open the downloaded APK. If Chrome warns about the file type, tap **Download anyway** first.
+2. When asked, allow installs from your browser or Files app.
+3. If Play Protect says the app is unrecognized, tap **Install anyway**. This is normal for apps installed outside the Play Store.
+
+To update, install the newer APK the same way. It installs over the old version.
+
 ## Screenshots
 
 ### Student view
