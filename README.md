@@ -18,6 +18,14 @@ To update, install the newer APK the same way. It installs over the old version.
 
 ## Screenshots
 
+### Signing in and registering
+
+New users tap **Register** on the sign-in screen. Registering asks only for a full name, a school email (`@hcdc.edu.ph`), and a password typed twice.
+
+| Sign in | Register | Register errors |
+|:---:|:---:|:---:|
+| <img src="docs/screenshots/login.png" width="240" alt="Sign-in screen with the Register link"> | <img src="docs/screenshots/register.png" width="240" alt="Register screen with full name, school email, password and confirm password"> | <img src="docs/screenshots/register-errors.png" width="240" alt="Register screen rejecting a non-school email and passwords that don't match"> |
+
 ### Student view
 
 Students can browse events and RSVP. They don't see the **New event** button, the **Manage users & clubs** menu item, or the edit and delete options on events.
@@ -36,11 +44,11 @@ Organizers get the **New event** button and can post only for their own club. Th
 
 ### Admin view
 
-| Sign in | Events dashboard | Event details |
+| Events dashboard | Event details | New event |
 |:---:|:---:|:---:|
-| <img src="docs/screenshots/login.png" width="240" alt="Sign-in screen"> | <img src="docs/screenshots/dashboard.png" width="240" alt="Events dashboard"> | <img src="docs/screenshots/event-details.png" width="240" alt="Event details with RSVP button and the admin's See who's going link"> |
-| **New event** | **Manage users & clubs** | **Dark mode** |
-| <img src="docs/screenshots/new-event.png" width="240" alt="New event form"> | <img src="docs/screenshots/manage-users.png" width="240" alt="Admin screen for managing users and clubs"> | <img src="docs/screenshots/dashboard-dark.png" width="240" alt="Events dashboard in dark mode"> |
+| <img src="docs/screenshots/dashboard.png" width="240" alt="Events dashboard"> | <img src="docs/screenshots/event-details.png" width="240" alt="Event details with RSVP button and the admin's See who's going link"> | <img src="docs/screenshots/new-event.png" width="240" alt="New event form"> |
+| **Manage users & clubs** | **Dark mode** | |
+| <img src="docs/screenshots/manage-users.png" width="240" alt="Admin screen for managing users and clubs"> | <img src="docs/screenshots/dashboard-dark.png" width="240" alt="Events dashboard in dark mode"> | |
 
 ## Features
 

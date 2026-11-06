@@ -14,6 +14,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 - The sign-in screen now only signs in. Registering moved to its own screen.
 - `firestore.rules` lets users save an optional `fullName` (1–100 characters) on their own profile.
+- README screenshots: a new **Signing in and registering** section with the sign-in, register and register-error screens. The sign-in screenshot moved there from the admin view.
 
 ## [1.1.0] - 2026-11-07
 
